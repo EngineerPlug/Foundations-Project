@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Manager Home</title>
+        <link rel="icon" type="image/x-icon" href="icons8-ok-24.png">
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <h1 id="manager-greeting"></h1>
+        <section>
+            <br><br><br><br><br><br><br><br><br><br><br>
+            <div id="manager-input-block"></div>
+           <input type="text" id="defectDescription" min="2" max="15" placeholder="Enter A Defect" required>
+           <!--<button onclick="" id="defectDescriptionBtn">Submit</button>--> 
+                <br>
+            <br>
+            <br>
+                <input id="testerChoiceInput" type="text" min="2" max="15" placeholder="Choose A Tester" required>
+                <!--<button onclick="" id="testerChoiceBtn">Submit</button>-->
+            <br><br>
+                <p id="defect-id-input-manager" type="text" min="2" max="15"></p>
+            <br>
+            <br>
+            </div>
+        </section>
+        <br>
+        <button id="manager-assign-btn" type="submit" id="assignBtn">Assign</button>
+    </body>
+    <script>
+        document.getElementById("manager-greeting").innerHTML =`Hello ${localStorage.getItem("userName")}, Welcome Back!`;
+        const signOut = document.getElementById("manager-sign-out-block");
+        const assignBtn = document.getElementById("manager-assign-btn");
+        const managerInputBlock = document.getElementById("manager-input-block");
+        async function defectCaller() {
+    // this will convert login creds into JSON
+    let defectBody =  {
+  assignedTo: document.getElementById("testerChoiceInput").value,
+  dateReported: 0,
+  desc: document.getElementById("defectDescription").value,
+  stepsToReproduce: "string",
+  severity: "Low",
+  priority: "Low"
+}
+let defectJSON = JSON.stringify(defectBody);
+let config = {
+        method: "POST", // i am referencing the type of request i made
+        headers: {'Content-type': 'application/json; charset=UTF-8'}, // this is always required
+        body: defectJSON
+    }
+    let httpResponse = await fetch("https://bugcatcher.coe.revaturelabs.com/17/defects", config); // my personal url to my api
+    console.log(httpResponse.status);
+    let responseBody = await httpResponse.json();
+    console.log(responseBody.defectId); 
+    if(httpResponse.status === 201) {
+        alert('Updated!');       
+        localStorage.setItem("defectDescription", responseBody.desc);
+        localStorage.setItem("testerChoiceInput", responseBody.assignedTo);
+        document.getElementById("defect-id-input-manager").innerHTML = responseBody.defectId;
+        localStorage.setItem("defect-id-input-manager", responseBody.defectId);
+        window.location.href = "tester-home.html";
+        }
+   /*     let opacity = 0;
+        function hideManagerInputBlock() {
+    opacity = Number(window.getComputedStyle(managerInputBlock).getPropertyValue("opacity"));
+    if (opacity > 0) {
+        opacity = 0;
+        managerInputBlock.style.opacity = opacity;
+    } 
+}
+        function showSignOutBlock() {
+    opacity = Number(window.getComputedStyle(signOut).getPropertyValue("opacity"));
+    if (opacity < 1) {
+        opacity = opacity + 1;
+        signOut.style.opacity = opacity;
+    } 
+}
+hideManagerInputBlock();
+//showSignOutBlock();*/
+}
+        
+//defectCaller();
+assignBtn.addEventListener('click', defectCaller);
+    </script>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Tester Home</title>
+        <link rel="icon" type="image/x-icon" href="icons8-ok-24.png">
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <a href="login-page.html"><button id="tester-logout-btn">Log out</button></a>
+        <h1 id="test-greeting"></h1>
+        <section>
+            <aside></aside>
+                <br><br>
+        </section>
+        <br>
+        <table>
+            <thead>
+            <tr>
+               </tr>
+            <tr>
+                <th>Defect Description</th>
+                <th>Chosen Tester</th>
+                <th>Defect Id</th>
+                
+            </tr>
+            </thead>
+            <tr >
+                <td id="defect-input"></td>
+                <td id="tester-input"></td>
+                <td id="defect-id-input"></td>
+                <!--<td><button id="tester-accept-btn">Accept</button></td>-->
+                <!--<td><button id="tester-decline-btn">Decline</button></td>-->
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+            </tr>
+        </table>
+        <br>
+        <button id="finalize-button">Finalize Defect</button>
+    </body>
+    <script>
+        if (localStorage.getItem("userName") === "Geedo") {
+            window.location.href = "login-page.html";
+        }
+document.getElementById("test-greeting").innerHTML =`Hello ${localStorage.getItem("userName")}, Welcome Back!`;
+const decisionBlock = document.getElementsByClassName('decision-div')[0];
+const defectBlock = document.getElementsByClassName('defect-div')[0];
+const acceptBtn = document.getElementById("tester-accept-btn");
+const declineBtn = document.getElementById("decline-button");
+const tirePressureBtn = document.getElementById("tire-pressure");
+const lowOilBtn = document.getElementById("low-oil");
+const lowCoolantBtn = document.getElementById("low-coolant");
+const finalizeBtn = document.getElementById("finalize-button");
+const fixBtn = document.getElementById("fix-button");
+const rejectBtn = document.getElementById("reject-button");
+const shelveBtn = document.getElementById("shelve-button");
+const greeting = document.getElementById("test-greeting");
+const tester = document.getElementById("tester-input");
+const defectName = document.getElementById("defect-input");
+const defectNumber = document.getElementById("defectIdNumber");
+const defectDate = document.getElementById("defect-date");
+const defectId = document.getElementById("defect-id-input")
+
+
+async function testerRequest() {
+    // information for valid http request
+    let config = {
+        method: "GET", // i am referencing the type of request i made
+        headers: {'Content-type': 'application/json; charset=UTF-8'}, // this is always required
+    }
+    let httpResponse = await fetch(`https://bugcatcher.coe.revaturelabs.com/17/defects`);// make sure to enter the url assigned to you
+    console.log(httpResponse.status);
+    if(httpResponse.status === 200) { // 200 basically means request made successfully
+        let responseBody = await httpResponse.json(); // remember, json() returns a promise, so we use await to get the data we want out of it
+        defectName.innerHTML = "";
+        tester.innerHTML = "";
+        defectId.innerHTML = "";
+        document.getElementById("defect-input").innerHTML = `${localStorage.getItem("defectDescription")}`;
+        document.getElementById("tester-input").innerHTML = `${localStorage.getItem("testerChoiceInput")}`;
+        document.getElementById("defect-id-input").innerHTML = `${localStorage.getItem("defect-id-input-manager")}`;
+}
+
+ //declaring variable to measure opacity
+/*let opacity = 0;
+function rejectMessage() {
+    defectMessage.innerText = "You have declined this defect.";
+}
+//Tester page will recieve defect listed as buttons from manager page
+function showDefectBlock() {
+    opacity = Number(window.getComputedStyle(defectBlock).getPropertyValue("opacity"));
+    if (opacity < 1) {
+        opacity = opacity + 1;
+        defectBlock.style.opacity = opacity;
+    } 
+}
+//once defect button is clicked the decision buttons will appear
+function showDecisionBlock() {
+    opacity = Number(window.getComputedStyle(decisionBlock).getPropertyValue("opacity"));
+    if (opacity < 1) {
+        opacity = opacity + 1;
+        decisionBlock.style.opacity = opacity;
+    }*/ 
+}
+/*async function acceptOrDecline(value) {
+    let defectUpdate = {
+    status: value
+}
+    let defectUpdateBody = JSON.stringify(defectUpdate);
+    let updateDefectConfig = {
+        method: "PATCH",
+        headers: {'Content-Type': 'application/json; charset=UTF-8'},
+        body: defectUpdateBody
+    }
+    let httpResponse = await fetch(`https://bugcatcher.coe.revaturelabs.com/17/defects/${defectid}`, config);// make sure to enter the url assigned to you
+    console.log(httpResponse.status);
+    if(httpResponse.status === 200) { // 200 basically means request made successfully
+        let responseBody = await httpResponse.json();
+        console.log(responseBody.status);
+  }
+}*/
+testerRequest();
+//acceptBtn.addEventListener('click', testerRequest);
+//shelveBtn.addEventListener('click', showFinalizeBtn);
+//rejectBtn.addEventListener('click', showFinalizeBtn);
+//fixBtn.addEventListener('click', showFinalizeBtn);
+//acceptBtn.addEventListener('click', showDefectBlock);
+//declineBtn.addEventListener('click', rejectMessage)
+//tirePressureBtn.addEventListener('click', showDecisionBlock);
+//lowOilBtn.addEventListener('click', showDecisionBlock);
+//lowCoolantBtn.addEventListener('click', showDecisionBlock);
+    </script>
+</html>

@@ -1,0 +1,143 @@
+* {
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+body {
+    text-align: center;
+    padding-right: 65px;
+    padding-left: 65px;
+    width: 82%;
+}
+
+section {
+    text-align: center;
+    align-items: center;
+    padding-left: 200px;
+    padding-right: 200px;
+    margin-top: 60px;
+    background: url(little-songhai-red.PNG);
+    background-size: auto;
+    height: 34.5vh;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #6e190a;
+}
+thead {
+    background: #6e190a;
+}
+
+#login {
+    border: none;
+    background: #226e3583;
+    height: 4vh;
+}
+
+#login:hover {
+    cursor: pointer;
+}
+
+#tester-logout-btn {
+    border: none;
+    background: #226e3583;
+    height: 4vh;
+}
+
+#manager-assign-btn {
+    border: none;
+    background: #226e3583;
+    height: 4vh;
+}
+
+#tester-accept-btn {
+    border: none;
+    background: #226e3583;
+    height: 3.1vh;
+}
+
+#tester-decline-btn {
+    border: none;
+    background: #226e3583;
+    height: 3.1vh;
+}
+
+button {
+    text-transform: uppercase;
+}
+
+.input-block {
+    background-size: cover;
+    padding-left: 30px;
+    padding-right: 30px;
+    text-align: center;
+    height: 7vh;
+}
+
+.decision-div {
+    opacity: 0;
+    transition: all 100ms ease-out;
+}
+
+.decision-div::before {
+    opacity: 0;
+}
+
+.decision-div::after {
+    opacity: 1;
+}
+
+.defect-div {
+    opacity: 0;
+    transition: all 100ms ease-out;
+}
+
+.defect-div::before {
+    opacity: 0;
+}
+
+.defect-div::after {
+    opacity: 1;
+}
+
+#finalize-button {
+    height: auto;
+    opacity: 0;
+    transition: all 100ms ease-out;
+}
+
+#finalize-button::before {
+    opacity: 0;
+}
+
+#finalize-button::after {
+    opacity: 1;
+}
+
+#manager-input-block {
+    opacity: 1;
+    transition: all 100ms ease-out;
+}
+
+#manager-input-block::before {
+    opacity: 1;
+}
+
+#manager-input-block::after {
+    opacity: 0;
+}
+
+#manager-sign-out-block {
+    height: auto;
+    opacity: 0;
+    transition: all 200ms ease-out;
+}
+
+#manager-sign-out-block::before {
+    opacity: 0;
+}
+
+#manager-sign-out-block::after {
+    opacity: 1;
+}

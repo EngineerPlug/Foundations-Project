@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Login Page</title>
+        <link rel="icon" type="image/x-icon" href="icons8-ok-24.png">
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header class="login-header">
+
+        </header>
+        <section>
+            <div class="input-block">
+                <br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <input type="text" id="userName" name="userName" min="2" max="15" placeholder="Username" required>
+            <br><br>
+            <input type="password" id="passWord" name="passWord" min="2" max="15" placeholder="Password" required>
+            <br><br>
+        </div>
+        </section>
+        <br>
+        <br>
+        <button id="login">Login</button>
+    </body>
+    <script>
+        const loginBtn = document.getElementById("login");
+async function login() {
+    // api validation algorithm
+    let loginCreds = {
+        username: document.getElementById("userName").value,
+        password: document.getElementById("passWord").value 
+    }
+
+    // this will convert login creds into JSON
+    let loginJSON = JSON.stringify(loginCreds);
+
+    // information for valid http request
+    let config = {
+        method: "PATCH", // i am referencing the type of request i made
+        headers: {'Content-type': 'application/json; charset=UTF-8'}, // this is always required
+        body: loginJSON
+    }
+
+    let httpResponse = await fetch(`https://bugcatcher.coe.revaturelabs.com/17/login`, config); // my personal url to my api
+    console.log(httpResponse);
+    if(httpResponse.status === 200) {
+        let responseBody = await httpResponse.json(); // this json() will return a promise to await login creds
+        console.log(responseBody.status);
+        if (responseBody.role === "Tester") {
+            localStorage.setItem("userName", responseBody.fname);
+            window.location.href = "tester-home.html";
+        } else {
+            localStorage.setItem("userName", responseBody.fname);
+            window.location.href = "manager-home.html";
+        }
+    } else {
+        let responseBody = await httpResponse.json(); // a promise waiting for more data
+        alert(responseBody.detail);
+    }
+}
+// Tester page will recieve defect listed as buttons from manager page
+//login()
+loginBtn.addEventListener('click', login);
+    </script>
+</html>
